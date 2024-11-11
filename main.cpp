@@ -20,6 +20,9 @@ void videoCapture (cv::VideoCapture capture) {
 }
 
 int displayFrame (cv::Mat frame, cv::VideoCapture capture) {
+	#define INPUT_WIDTH 864
+	#define INPUT_HEIGHT 600
+	
 	// Capture a frame from the webcam
     capture >> frame;
     
@@ -28,6 +31,10 @@ int displayFrame (cv::Mat frame, cv::VideoCapture capture) {
 		std::cerr << "Error: Could not capture frame." << std::endl;
 		return -1;
 	}
+	
+	// Resize and normalize each frame
+	cv::resize(frame, frame, cv::Size(INPUT_WIDTH, INPUT_HEIGHT));
+	frame.convertTo(frame, CV_32F, 1.0 / 255);
 
 	// Display the frame in the window
 	cv::imshow("Webcam Test", frame);
