@@ -18,4 +18,4 @@ For all you math-inclined folks, the maximum framerate can't surpass one divided
 
 (Reference: https://www.pcgamer.com/does-lighting-affect-fps-on-webcams/)
 
-I also discovered my camera can supposedly reach 60 FPS, which means it’s lagging behind. So I may have to tweak that... but not today!
+I also discovered my camera can supposedly reach 60 FPS, which means it’s lagging behind. So I have to tweak that... but not today!
