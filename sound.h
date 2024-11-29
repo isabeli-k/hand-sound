@@ -5,37 +5,34 @@
 
 namespace sound {
 	#define TWO_PI 6.283185307
+	#define SAMPLE_RATE 44100
+	#define MAX_AMPLITUDE 32767
 	
 	short SineWave (double time, double freq, double amp) {
 		// Calculate angular frequency
-		double omega = TWO_PI * freq / 44100;
+		double omega = TWO_PI * freq / SAMPLE_RATE;
 		
 		// Calculate amplitude
-		double amplitude = (short)(32767 * amp);
+		double amplitude = (short)(MAX_AMPLITUDE * amp);
 		
 		// Result as sine of phase angle
 		return (short)(amplitude * sin(omega * time));
 	}
 	
 	short SquareWave (double time, double freq, double amp) {
-		short result = 0;
-		int tpc = 44100 / freq;
-		int cyclepart = (int)time % tpc;
-		int halfcycle = tpc / 2;
-		short amplitude = 32767 * amp;
+		// Ticks per cycle and amplitude
+		double tcp = SAMPLE_RATE / freq;
+		double amplitude = (short)(MAX_AMPLITUDE * amp);
 
-		if (cyclepart < halfcycle) {
-		   result = amplitude;
-		}
-
-		return result;
+		// Determine position in the cycle and return amplitude accordingly
+		return (fmod(time, tpc) < tpx / 2) ? amplitude : 0;
 	}
 	
 	short TriangleWave (double time, double freq, double amp) {
 		// Ticks per cycle and amplitude
-		double tpc = 44100 / freq;
+		double tpc = SAMPLE_RATE / freq;
 		double cyclepart = fmod(time, tpc);
-		short amplitude = (short)(32767 * amp);
+		short amplitude = (short)(MAX_AMPLITUDE * amp);
 		
 		// Triangle wave value -- normalized to [0, 2]
 		double normal = (cyclepart / tpc) * 2.0;
@@ -46,9 +43,9 @@ namespace sound {
 	
 	short SawtoothleWave (double time, double freq, double amp) {
 		// Ticks per cycle and amplitude
-		double tpc = 44100 / freq;
+		double tpc = SAMPLE_RATE / freq;
 		double cyclepart = fmod(time, tpc);
-		short amplitude = (short)(32767 * amp);
+		short amplitude = (short)(MAX_AMPLITUDE * amp);
 		
 		// Calculate wave value
 		double wave = 2.0 * (cyclepart / tpc) - 1.0;
